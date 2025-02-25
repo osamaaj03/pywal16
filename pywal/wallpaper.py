@@ -82,6 +82,10 @@ def set_wm_wallpaper(img):
     elif shutil.which("feh"):
         util.disown(["feh", "--bg-fill", img])
 
+    elif shutil.which("wbg"):
+        subprocess.call(["killall", "wbg"])
+        util.disown(["wbg", img])
+
     elif shutil.which("xwallpaper"):
         util.disown(["xwallpaper", "--zoom", img])
 
@@ -179,6 +183,7 @@ def set_desktop_wallpaper(desktop, img):
         )
 
     elif "hyprland" in desktop and shutil.which("hyprpaper"):
+        util.disown(["hyprctl", "hyprpaper", "preload ", + img])
         util.disown(["hyprctl", "hyprpaper", "wallpaper", ", " + img])
     else:
         set_wm_wallpaper(img)
